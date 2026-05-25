@@ -1,0 +1,323 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Reset */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+#videoFondo {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+    filter: brightness(0.8);
+}
+
+/* Capa oscura */
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: -1;
+}
+
+.login-container {
+    width: 380px;
+    padding: 35px;
+
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(8px);
+
+    border-radius: 12px;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.35);
+
+    animation: aparecer 0.8s ease;
+}
+
+/* Logo */
+.logo {
+    display: block;
+    margin: auto;
+    width: 120px;
+    margin-bottom: 10px;
+}
+
+/* Titulo */
+.login-container h1 {
+    text-align: center;
+    color: #0A1F44;
+    /* Azul Marino CPV */
+    margin-bottom: 5px;
+    font-size: 22px;
+}
+
+/* Subtitulo */
+.login-container p {
+    text-align: center;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+/* Labels */
+label {
+    display: block;
+    margin-top: 15px;
+    font-weight: 600;
+    color: #333;
+}
+
+.swal-superior {
+    z-index: 99999 !important;
+}
+
+/* Estilos para navegadores basados en Webkit (Chrome, Edge, Safari) */
+.custom-scrollbar::-webkit-scrollbar {
+  height: 6px; /* La hace más delgada */
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent; /* Fondo invisible para que no se vea una línea gris tosca */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* Un color gris sutil (slate-300) */
+  border-radius: 10px; /* Bordes completamente redondeados */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* Se oscurece un poco al pasar el cursor (slate-400) */
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-top: 6px;
+
+    border: 1px solid #c9c9c9;
+    border-radius: 6px;
+
+    background: #f9f9f9;
+
+    transition: all 0.3s;
+}
+/* Ejemplo de estilos para el botón */
+.btn-deshabilitado {
+    background-color: #9ca3af !important; /* Gris */
+    cursor: not-allowed;
+    opacity: 0.7;
+}
+
+/* Hover inputs */
+input:hover {
+    border-color: #6D6D6D;
+    /* gris medio */
+}
+
+/* Focus inputs */
+input:focus {
+    outline: none;
+    border-color: #0A1F44;
+    box-shadow: 0 0 6px rgba(10, 31, 68, 0.4);
+}
+
+/* Grupo input + icono */
+.input-group {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+/* Icono izquierdo */
+.icono {
+    position: absolute;
+    left: 10px;
+    width: 24px;
+    opacity: 0.7;
+}
+
+/* Ajuste del input */
+.input-group input {
+    padding-left: 35px;
+}
+
+/* Icono ojo */
+.ojo {
+    position: absolute;
+    right: 10px;
+    width: 24px;
+    cursor: pointer;
+    opacity: 0.6;
+}
+
+.ojo:hover {
+    opacity: 1;
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    margin-top: 22px;
+
+    background: #0A1F44;
+    color: white;
+
+    border: none;
+    border-radius: 6px;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition: all 0.25s ease;
+}
+
+.soporte {
+    margin-top: 15px;
+    font-size: 12px;
+    text-align: center;
+    color: #666;
+    line-height: 1.4;
+}
+
+/* Hover botón */
+button:hover {
+    background: #132c5f;
+    transform: scale(1.03);
+}
+
+/* Active botón */
+button:active {
+    transform: scale(0.98);
+}
+
+.footer {
+    position: absolute;
+    bottom: 10px;
+    width: 100%;
+    text-align: center;
+    color: white;
+    opacity: 0.7;
+}
+
+@keyframes aparecer {
+    from {
+        opacity: 0;
+        transform: translate(-50%, -60%);
+    }
+
+    to {
+        opacity: 1;
+        transform: translate(-50%, -50%);
+    }
+}
+/* Tablets (iPad y tablets Android) */
+@media (max-width: 768px) {
+
+    .login-container {
+        width: 70%;
+        max-width: 500px;
+        padding: 40px;
+        background: rgba(255, 255, 255, 0.9); /* mantiene transparencia */
+        backdrop-filter: blur(8px); /* efecto vidrio moderno */
+    }
+
+    .logo {
+        width: 140px;
+    }
+
+    .login-container h1 {
+        font-size: 24px;
+    }
+
+    input {
+        padding: 16px;
+        font-size: 16px;
+    }
+
+    button {
+        padding: 16px;
+        font-size: 16px;
+    }
+} 
+
+/* 1. El ancho de la barra */
+.modal-scroll-custom::-webkit-scrollbar {
+    width: 8px; /* Un poco más ancha para que se note el redondeo */
+}
+
+/* 2. El fondo del scroll (la pista) */
+.modal-scroll-custom::-webkit-scrollbar-track {
+    background: #f1f1f1;
+    border-radius: 10px;
+}
+
+/* 3. La parte que se mueve (el "pulgar") */
+.modal-scroll-custom::-webkit-scrollbar-thumb {
+    background: #ccc; /* Color gris suave */
+    border-radius: 10px; /* Bordes redondeados */
+    border: 2px solid #f1f1f1; /* Esto crea un efecto de "margen" alrededor del scroll */
+}
+
+/* 4. Color al pasar el mouse */
+.modal-scroll-custom::-webkit-scrollbar-thumb:hover {
+    background: #122C5F; /* Cambia al azul de tu diseño al pasar el mouse */
+}
+
+
+/* Celulares */
+@media (max-width: 480px) {
+
+    .login-container {
+        width: 92%;
+        max-width: none;
+        padding: 40px 30px;
+        border-radius: 18px;
+
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+
+        background: rgba(255, 255, 255, 0.88); /* transparencia */
+        backdrop-filter: blur(10px); /* efecto vidrio */
+    }
+
+    .logo {
+        width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .login-container h1 {
+        font-size: 26px;
+        text-align: center;
+    }
+
+    input {
+        padding: 18px;
+        font-size: 17px;
+    }
+
+    button {
+        padding: 18px;
+        font-size: 17px;
+        margin-top: 20px;
+    }
+}
