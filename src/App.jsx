@@ -1,7 +1,7 @@
 import React from 'react';
 import Login from "./pages/login.jsx";
 import PrincipalNombrador from "./pages/Nombrador/Principal.jsx";
-import Trabajador from "./pages/Trabajador.jsx"; // <-- Asegúrate de que esta ruta apunte a tu archivo de Trabajador
+import Trabajador from "./pages/trabajador.jsx"; // <-- Asegúrate de que esta ruta apunte a tu archivo de Trabajador
 
 function App() {
   // Leemos la ruta actual en la barra de direcciones
