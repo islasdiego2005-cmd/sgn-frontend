@@ -12,7 +12,7 @@ function App() {
     return <PrincipalNombrador />;
   }
 
-  if (rutaActual === '/Trabajador/Dashboard') {
+  if (rutaActual === '/trabajador/Dashboard') {
     return <Trabajador />;
   }
 
