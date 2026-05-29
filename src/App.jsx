@@ -1,21 +1,22 @@
 import React from 'react';
 import Login from "./pages/login.jsx";
 import PrincipalNombrador from "./pages/Nombrador/Principal.jsx";
-import Trabajador from "./pages/trabajador.jsx"; // <-- Asegúrate de que esta ruta apunte a tu archivo de Trabajador
+import Trabajador from "./pages/trabajador.jsx";
 
 function App() {
-  // Leemos la ruta actual en la barra de direcciones
-  const rutaActual = window.location.pathname;
 
-  if (rutaActual === '/Nombrador/Principal') {
+  // LEER EL HASH EN VEZ DEL PATHNAME
+  const rutaActual = window.location.hash;
+
+  if (rutaActual === '#/Nombrador/Principal') {
     return <PrincipalNombrador />;
   }
 
-  if (rutaActual === '/Trabajador/Dashboard') {
+  if (rutaActual === '#/Trabajador/Dashboard') {
     return <Trabajador />;
   }
 
-  // Si no está en ninguna de las rutas de arriba (como la raíz "/"), muestra el Login
+  // Ruta por defecto
   return <Login />;
 }
 
