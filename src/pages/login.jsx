@@ -17,7 +17,7 @@ const Login = () => {
   const [numControlRecuperacion, setNumControlRecuperacion] = useState('');
   const [nuevaPassword, setNuevaPassword] = useState('');
   const [mensajeRecuperacion, setMensajeRecuperacion] = useState('');
- 
+
 
   const handleLogin = async (e) => {
 
@@ -45,12 +45,12 @@ const Login = () => {
       if (datosUsuario.rol === 'Administrador') {
 
         window.location.href =
-          '/Nombrador/Principal';
+          '/#/Nombrador/Principal';
 
       } else if (datosUsuario.rol === 'Trabajador') {
 
         window.location.href =
-          '/Trabajador/Dashboard';
+          '/#/Trabajador/Dashboard';
 
       }
 
