@@ -44,15 +44,15 @@ const Trabajadores = () => {
     useEffect(() => {
         const obtenerTrabajadores = async () => {
             try {
-                //  Apuntamos a la ruta correcta de trabajadores
                 const respuesta = await axios.get(`${API_URL}/api/trabajadores`);
-                // Mapeamos los campos reales usando los nombres que devuelve tu consulta SQL
+
                 const datosFormateados = respuesta.data.map(u => ({
-                    foto: '/src/assets/imagenes/user.png',
-                    id: u.num_control || 'S/N',            // Mapea num_control
-                    nombre: u.nombre_completo || 'Sin Nombre', // Mapea nombre_completo
-                    cursos: u.cursos || 'Ninguno',         // Lee los cursos dinámicos de la BD
-                    estatus: u.estatus || 'Apto'           // Lee el estatus dinámico de la BD
+                    // USAMOS LA VARIABLE IMPORTADA 'user' AQUÍ
+                    foto: u.foto || user,
+                    id: u.num_control || 'S/N',
+                    nombre: u.nombre_completo || 'Sin Nombre',
+                    cursos: u.cursos || 'Ninguno',
+                    estatus: u.estatus || 'Apto'
                 }));
 
                 setTrabajadores(datosFormateados);
@@ -63,8 +63,8 @@ const Trabajadores = () => {
         };
 
         obtenerTrabajadores();
-        // Agregamos una pequeña dependencia para que se actualice al abrir/cerrar modales si se requiere
     }, [modalAgregar, modalEditar, modalEliminar]);
+    
     const trabajadoresFiltrados = trabajadores.filter((t) => {
         const coincideBusqueda = t.nombre.toLowerCase().includes(busqueda.toLowerCase()) || t.id.toLowerCase().includes(busqueda.toLowerCase());
         const coincideEstatus = filtroEstatus === 'Todos' || t.estatus === filtroEstatus;
