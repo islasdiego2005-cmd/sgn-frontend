@@ -1,6 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+import fotoperfilm from '../assets/imagenes/fotoperfilm.png';
+import iconocerrar from '../assets/imagenes/iconocerrar.png';
+import logo1 from '../assets/imagenes/logo1.png';
+
+const API_URL = import.meta.env.VITE_API_URL;
 const Trabajador = () => {
     const [seleccionadas, setSeleccionadas] = useState([]);
     const [datosTrabajador, setDatosTrabajador] = useState(null);
@@ -25,8 +30,10 @@ const Trabajador = () => {
                         )
                     );
 
-                const res = await axios.get(
-                    `http://localhost:5000/api/trabajadores/${usuario.num_control}/resultado`);
+
+
+                // 2. Usamos esa variable en lugar del localhost
+                const res = await axios.get(`${API_URL}/api/trabajadores/${usuario.num_control}/resultado`);
 
                 if (res.data.resultado) {
                     Swal.fire({
@@ -68,7 +75,7 @@ const Trabajador = () => {
 
 
                 const resEspecialidades = await axios.get(
-                    'http://localhost:5000/api/convocatorias/disponibles'
+                    `${API_URL}/api/convocatorias/disponibles`
                 );
 
                 setEspecialidadesDisponibles(resEspecialidades.data);
@@ -77,12 +84,10 @@ const Trabajador = () => {
                 if (usuarioObj) {
 
                     const resCursos = await axios.get(
-                        `http://localhost:5000/api/trabajadores/${usuarioObj.num_control}/cursos`
+                        `${API_URL}/api/trabajadores/${usuarioObj.num_control}/cursos`
                     );
 
                     console.log("CURSOS DEL TRABAJADOR:", resCursos.data);
-
-
 
                     const cursosNormalizados = resCursos.data.map(curso => {
 
@@ -103,9 +108,8 @@ const Trabajador = () => {
 
                     setCursosTrabajador(cursosNormalizados);
 
-
                     const resPostulacion = await axios.get(
-                        `http://localhost:5000/api/trabajadores/${usuarioObj.num_control}/postulacion-activa`
+                        `${API_URL}/api/trabajadores/${usuarioObj.num_control}/postulacion-activa`
                     );
 
                     setYaPostulado(resPostulacion.data.yaPostulado);
@@ -158,7 +162,7 @@ const Trabajador = () => {
         }
 
         try {
-            await axios.post('http://localhost:5000/api/postulaciones/crear', {
+            await axios.post(`${API_URL}/api/postulaciones/crear`, {
                 num_control: datosTrabajador.num_control,
                 puestos: seleccionadas
             });
@@ -269,8 +273,9 @@ const Trabajador = () => {
                             border: '4px solid white'
                         }}
                     >
+                        {/* Imagen de Perfil */}
                         <img
-                            src="/src/assets/imagenes/fotoperfilm.png"
+                            src={fotoperfilm}
                             alt="Perfil"
                             style={{
                                 width: '100%',
@@ -341,8 +346,12 @@ const Trabajador = () => {
                         boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                         flexShrink: 0
                     }}>
-                        <img src="/src/assets/imagenes/iconocerrar.png" alt="Cerrar sesión" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                    </div>
+                        {/* Icono Cerrar */}
+                        <img
+                            src={iconocerrar}
+                            alt="Cerrar sesión"
+                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                        />                    </div>
                     <span style={{ fontWeight: '500', userSelect: 'none' }}>Cerrar Sesión</span>
                 </button>
 
@@ -375,8 +384,9 @@ const Trabajador = () => {
                             : 'Sistema Gestor de Nombramientos'}
                     </h2>
 
+                    {/* Logo */}
                     <img
-                        src="/src/assets/imagenes/logo1.png"
+                        src={logo1}
                         alt="Logo"
                         style={{ height: '40px' }}
                     />

@@ -5,6 +5,7 @@ import iconoReporte from '../assets/imagenes/reporte.png';
 import iconoTrabajador from '../assets/imagenes/trabajador.png';
 import iconoConfig from '../assets/imagenes/configuraciones.png';
 import fotoPerfil from '../assets/imagenes/fotoperfilm.png';
+import iconoCerrar from '../assets/imagenes/iconocerrar.png';
 
 
 const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout }) => {
@@ -96,8 +97,11 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                         }}
                     >
                         <div style={{ backgroundColor: '#4472C4', borderRadius: '6px', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '45px', height: '45px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
-                            <img src="/src/assets/imagenes/iconocerrar.png" alt="Salir" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
-                        </div>
+                            <img
+                                src={iconoCerrar}
+                                alt="Salir"
+                                style={{ width: '100%', height: '100%', objectFit: 'contain' }}
+                            />                        </div>
                         <span style={{ fontWeight: '500' }}>Cerrar Sesión</span>
                     </button>
                 </div>

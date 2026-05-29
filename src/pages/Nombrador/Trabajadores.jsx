@@ -5,6 +5,8 @@ import ModalTrabajador from '../../components/ModalTrabajador';
 import ModalEditarTrabajador from '../../components/ModalEditarTrabajador';
 import ModalVerTrabajador from '../../components/ModalVerTrabajador';
 import ModalConfirmacion from '../../components/ModalConfirmacion';
+import fotoPerfil from '../../assets/imagenes/fotoperfilm.png';
+
 const API_URL = import.meta.env.VITE_API_URL;
 const Trabajadores = () => {
     const [esMovil, setEsMovil] = useState(window.innerWidth < 1024);
