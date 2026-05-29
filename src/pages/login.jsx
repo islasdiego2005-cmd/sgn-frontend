@@ -169,7 +169,7 @@ const Login = () => {
         <form onSubmit={handleLogin}>
 
           <label className="block mt-4 text-sm font-semibold text-slate-800">
-            Matrícula / Número de Control
+            Matrícula
           </label>
 
           <div className="input-group">
