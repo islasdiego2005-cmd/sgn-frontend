@@ -17,7 +17,7 @@ const Trabajadores = () => {
     const [modalEditar, setModalEditar] = useState(false);
     const [modalVer, setModalVer] = useState(false);
     const [modalEliminar, setModalEliminar] = useState(false);
-    
+
 
     const [seleccionado, setSeleccionado] = useState(null);
 
@@ -185,7 +185,11 @@ const Trabajadores = () => {
                             {trabajadoresFiltrados.length > 0 ? (
                                 trabajadoresFiltrados.map((t, idx) => (
                                     <tr key={t.id} style={{ borderBottom: '1px solid #f3f4f6', backgroundColor: idx % 2 === 0 ? 'white' : '#f9fafb' }}>
-                                        <td style={{ padding: '6px 10px' }}><div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#e5e7eb', overflow: 'hidden' }}><img src={t.foto} alt="foto" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div></td>
+                                        <td style={{ padding: '6px 10px' }}><div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#e5e7eb', overflow: 'hidden' }}><img
+                                            src={t.foto || fotoPerfil} // Si t.foto existe, úsala; si no, usa la foto por defecto que importaste
+                                            alt="foto"
+                                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                        /></div></td>
                                         <td style={{ padding: '10px', color: '#4b5563', fontWeight: '600' }}>{t.id}</td>
                                         <td style={{ padding: '10px', fontWeight: 'bold', color: '#111827' }}>{t.nombre}</td>
                                         <td style={{ padding: '10px', color: '#6b7280' }}><div style={{ maxWidth: '150px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={t.cursos}>{t.cursos}</div></td>

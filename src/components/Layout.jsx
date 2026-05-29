@@ -1,4 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import logo1 from '../assets/imagenes/logo1.png';
+import iconoHogar from '../assets/imagenes/hogar.png';
+import iconoReporte from '../assets/imagenes/reporte.png';
+import iconoTrabajador from '../assets/imagenes/trabajador.png';
+import iconoConfig from '../assets/imagenes/configuraciones.png';
+import fotoPerfil from '../assets/imagenes/fotoperfilm.png';
+
 
 const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout }) => {
     const [menuAbierto, setMenuAbierto] = useState(false);
@@ -28,10 +35,10 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
     const rolUsuario = usuario?.rol || 'Nombrador';
 
     const opcionesMenu = [
-        { nombre: 'Principal', icono: '/src/assets/imagenes/hogar.png' },
-        { nombre: 'Reportes', icono: '/src/assets/imagenes/reporte.png' },
-        { nombre: 'Trabajadores', icono: '/src/assets/imagenes/trabajador.png' },
-        { nombre: 'Configuración', icono: '/src/assets/imagenes/configuraciones.png' }
+        { nombre: 'Principal', icono: iconoHogar },
+        { nombre: 'Reportes', icono: iconoReporte },
+        { nombre: 'Trabajadores', icono: iconoTrabajador },
+        { nombre: 'Configuración', icono: iconoConfig }
     ];
 
     return (
@@ -50,7 +57,7 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                 {/* Sección de Perfil */}
                 <div style={{ backgroundColor: '#4472C4', padding: '20px 15px', textAlign: 'center', display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '5px' }}>
                     <div style={{ width: '90px', height: '90px', borderRadius: '50%', backgroundColor: 'white', overflow: 'hidden', border: '3px solid #fff' }}>
-                        <img src="/src/assets/imagenes/fotoperfilm.png" alt="Perfil" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                        <img src={fotoPerfil} alt="Perfil" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                     <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem', lineHeight: '1.2' }}>{nombreUsuario}</div>
                     {matriculaUsuario && <div style={{ color: '#dbeafe', marginTop: '5px', fontSize: '0.9rem' }}>{matriculaUsuario}</div>}
@@ -108,7 +115,7 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                         <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>Sistema de Gestión</h2>
                     </div>
                     {/* Logo CPV */}
-                    <img src="/src/assets/imagenes/logo1.png" alt="CPV" style={{ height: '40px', objectFit: 'contain' }} />
+                    <img src={logo1} alt="CPV" style={{ height: '40px', objectFit: 'contain' }} />
                 </header>
 
                 <main style={{ flex: 1, padding: esMovil ? '15px' : '30px', overflowY: 'auto', backgroundColor: '#C4C4C5' }}>
