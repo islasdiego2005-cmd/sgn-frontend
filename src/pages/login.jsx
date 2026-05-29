@@ -1,6 +1,9 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import logo1 from '../assets/imagenes/logo1.png';
+import lockIcon from '../assets/imagenes/lock.png';
+import userIcon from '../assets/imagenes/user.png';
+import eyeoIcon from '../assets/imagenes/eyeo.png';
 
 const Login = () => {
 
@@ -172,7 +175,7 @@ const Login = () => {
           <div className="input-group">
 
             <img
-              src="/src/assets/imagenes/user.png"
+              src={userIcon}
               className="icono"
               alt="user"
             />
@@ -197,9 +200,15 @@ const Login = () => {
           <div className="input-group">
 
             <img
-              src="/src/assets/imagenes/lock.png"
+              src={lockIcon}
               className="icono"
               alt="lock"
+            />
+
+            <img
+              src={userIcon}
+              className="icono"
+              alt="user"
             />
 
             <input
@@ -218,12 +227,10 @@ const Login = () => {
             />
 
             <img
-              src="/src/assets/imagenes/eyeo.png"
+              src={eyeoIcon}
               className="ojo"
               alt="eye"
-              onClick={() =>
-                setVerPassword(!verPassword)
-              }
+              onClick={() => setVerPassword(!verPassword)}
             />
 
           </div>
