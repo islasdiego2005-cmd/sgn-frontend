@@ -205,12 +205,6 @@ const Login = () => {
               alt="lock"
             />
 
-            <img
-              src={userIcon}
-              className="icono"
-              alt="user"
-            />
-
             <input
               className="w-full transition duration-200 focus:border-slate-950 focus:ring-2 focus:ring-slate-200 outline-none"
               type={
