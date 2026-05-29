@@ -14,11 +14,13 @@ const Reportes = () => {
     const [nombramientos, setNombramientos] = useState([]);
     const [modalOpen, setModalOpen] = useState(false);
     const [selectedNombramiento, setSelectedNombramiento] = useState(null);
+      const API_URL = import.meta.env.VITE_API_URL;
+
 
     // Función para obtener nombramientos desde la API y mapearlos para la UI
     const fetchNombramientos = async () => {
         try {
-            const response = await axios.get('http://localhost:5000/api/nombramientos');
+            const response = await axios.get(`${API_URL}/api/nombramientos`);
             const datosMapeados = response.data.map(item => {
                 const fechaRaw = item.fecha_carga || item.fecha || item.fechaCarga || item.created_at || item.createdAt || null;
                 let fecha = 'S/F';
@@ -147,7 +149,7 @@ const Reportes = () => {
             // Postulados sheet: obtener postulados desde API para este nombramiento
             try {
                 const id = item.id || item.raw?.id_nombramiento;
-                const resp = await axios.get(`http://localhost:5000/api/nombramientos/${id}/postulados`); 
+                const resp = await axios.get(`${API_URL}/api/nombramientos/${id}/postulados`); 
                 const postulados = resp.data || [];
 
                 const postuladosRows = postulados.map(p => ({

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-
+const API_URL = import.meta.env.VITE_API_URL;
 const ModalNuevoNombramiento = ({ isOpen, onClose, fetchNombramientos }) => {
 
     // =========================
@@ -150,7 +150,7 @@ const ModalNuevoNombramiento = ({ isOpen, onClose, fetchNombramientos }) => {
         const codigo_nombramiento = `NOM-${fechaSoloDia.replace(/-/g, '')}-${Math.floor(100 + Math.random() * 900)}`;
 
         try {
-            const response = await axios.post('http://localhost:5000/api/nombramientos/crear', {
+            const response = await axios.post(`${API_URL}/api/nombramientos/crear`, {
                 codigo_nombramiento, barco, turno, fecha_carga: fechaCarga, fecha_cierre: fechaCierre, muelle, vacantes
             });
 

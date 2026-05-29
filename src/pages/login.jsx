@@ -4,7 +4,8 @@ import logo1 from '../assets/imagenes/logo1.png';
 import lockIcon from '../assets/imagenes/lock.png';
 import userIcon from '../assets/imagenes/user.png';
 import eyeoIcon from '../assets/imagenes/eyeo.png';
-
+const API_URL = import.meta.env.VITE_API_URL;
+console.log("¿Cuál es la URL que estoy usando?:", API_URL); // <--- PON ESTO
 const Login = () => {
 
   const [numControl, setNumControl] = useState('');
@@ -16,6 +17,7 @@ const Login = () => {
   const [numControlRecuperacion, setNumControlRecuperacion] = useState('');
   const [nuevaPassword, setNuevaPassword] = useState('');
   const [mensajeRecuperacion, setMensajeRecuperacion] = useState('');
+ 
 
   const handleLogin = async (e) => {
 
@@ -27,7 +29,7 @@ const Login = () => {
     try {
 
       const respuesta = await axios.post(
-        'http://localhost:5000/api/auth/login', {
+        `${API_URL}/api/auth/login`, {
         num_control: numControl,
         password: password
       }
@@ -92,7 +94,7 @@ const Login = () => {
     try {
   
       const respuesta = await axios.post(
-        'http://localhost:5000/api/auth/recuperar-password',
+        `${API_URL}/api/auth/recuperar-password`,
         {
           num_control: numControlRecuperacion,
           nuevaPassword: nuevaPassword
@@ -169,7 +171,7 @@ const Login = () => {
         <form onSubmit={handleLogin}>
 
           <label className="block mt-4 text-sm font-semibold text-slate-800">
-            Matrícula
+            Matrícula / Número de Control
           </label>
 
           <div className="input-group">

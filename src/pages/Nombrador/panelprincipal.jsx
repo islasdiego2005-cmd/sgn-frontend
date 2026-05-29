@@ -3,7 +3,8 @@ import axios from 'axios';
 import { Plus, Ship, Eye, Clock, CheckCircle, Check } from 'lucide-react';
 import ModalNuevoNombramiento from '../../components/ModalNuevoNombramiento';
 import ModalPostulados from '../../components/ModalPostulados';
-
+  
+const API_URL = import.meta.env.VITE_API_URL;
 const PanelPrincipal = () => {
 
     const [esMovil, setEsMovil] = useState(window.innerWidth < 1024);
@@ -22,7 +23,7 @@ const PanelPrincipal = () => {
 
     const fetchNombramientos = async () => {
         try {
-            const response = await axios.get('https://sgn-backend-icvc.onrender.com/api/nombramientos');
+            const response = await axios.get(`${API_URL}/api/nombramientos`);
             setNombramientos(response.data);
         } catch (error) {
             console.error("Error al obtener los nombramientos:", error);

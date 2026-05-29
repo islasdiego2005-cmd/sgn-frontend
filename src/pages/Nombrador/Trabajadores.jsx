@@ -5,7 +5,7 @@ import ModalTrabajador from '../../components/ModalTrabajador';
 import ModalEditarTrabajador from '../../components/ModalEditarTrabajador';
 import ModalVerTrabajador from '../../components/ModalVerTrabajador';
 import ModalConfirmacion from '../../components/ModalConfirmacion';
-
+const API_URL = import.meta.env.VITE_API_URL;
 const Trabajadores = () => {
     const [esMovil, setEsMovil] = useState(window.innerWidth < 1024);
     const [fechaActual, setFechaActual] = useState(new Date());
@@ -13,12 +13,11 @@ const Trabajadores = () => {
     const [busqueda, setBusqueda] = useState('');
     const [filtroEstatus, setFiltroEstatus] = useState('Todos');
     const [filtroCurso, setFiltroCurso] = useState('Todos');
-
-    // --- ESTADOS PARA LOS 4 MODALES ---
     const [modalAgregar, setModalAgregar] = useState(false);
     const [modalEditar, setModalEditar] = useState(false);
     const [modalVer, setModalVer] = useState(false);
     const [modalEliminar, setModalEliminar] = useState(false);
+    
 
     const [seleccionado, setSeleccionado] = useState(null);
 
@@ -38,14 +37,13 @@ const Trabajadores = () => {
     const opcionesFecha = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     const fechaFormateada = fechaActual.toLocaleDateString('es-MX', opcionesFecha);
     const horaFormateada = fechaActual.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
-    // --- DATOS REALES DESDE EL BACKEND ---
     const [trabajadores, setTrabajadores] = useState([]);
 
     useEffect(() => {
         const obtenerTrabajadores = async () => {
             try {
                 //  Apuntamos a la ruta correcta de trabajadores
-                const respuesta = await axios.get('http://localhost:5000/api/trabajadores');
+                const respuesta = await axios.get(`${API_URL}/api/trabajadores`);
                 // Mapeamos los campos reales usando los nombres que devuelve tu consulta SQL
                 const datosFormateados = respuesta.data.map(u => ({
                     foto: '/src/assets/imagenes/user.png',
@@ -87,7 +85,7 @@ const Trabajadores = () => {
         try {
             // Llamada al backend para eliminar de la BD
 
-            await axios.delete(`http://localhost:5000/api/trabajadores/${seleccionado.id}`);
+            await axios.delete(`${API_URL}/api/trabajadores/${seleccionado.id}`);
             //  Si la petición fue exitosa, actualizamos la interfaz localmente
             const nuevaLista = trabajadores.filter(t => t.id !== seleccionado.id);
             setTrabajadores(nuevaLista);
