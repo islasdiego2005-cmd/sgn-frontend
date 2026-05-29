@@ -26,7 +26,7 @@ const Trabajador = () => {
                     );
 
                 const res = await axios.get(
-                    `https://sgn-backend-icvc.onrender.com/api/trabajadores/${usuario.num_control}/resultado`);
+                    `http://localhost:5000/api/trabajadores/${usuario.num_control}/resultado`);
 
                 if (res.data.resultado) {
                     Swal.fire({
@@ -68,7 +68,7 @@ const Trabajador = () => {
 
 
                 const resEspecialidades = await axios.get(
-                    'https://sgn-backend-icvc.onrender.com/api/convocatorias/disponibles'
+                    'http://localhost:5000/api/convocatorias/disponibles'
                 );
 
                 setEspecialidadesDisponibles(resEspecialidades.data);
@@ -77,7 +77,7 @@ const Trabajador = () => {
                 if (usuarioObj) {
 
                     const resCursos = await axios.get(
-                        `https://sgn-backend-icvc.onrender.com/api/trabajadores/${usuarioObj.num_control}/cursos`
+                        `http://localhost:5000/api/trabajadores/${usuarioObj.num_control}/cursos`
                     );
 
                     console.log("CURSOS DEL TRABAJADOR:", resCursos.data);
@@ -105,7 +105,7 @@ const Trabajador = () => {
 
 
                     const resPostulacion = await axios.get(
-                        `https://sgn-backend-icvc.onrender.com/api/trabajadores/${usuarioObj.num_control}/postulacion-activa`
+                        `http://localhost:5000/api/trabajadores/${usuarioObj.num_control}/postulacion-activa`
                     );
 
                     setYaPostulado(resPostulacion.data.yaPostulado);
@@ -158,7 +158,7 @@ const Trabajador = () => {
         }
 
         try {
-            await axios.post('https://sgn-backend-icvc.onrender.com/api/postulaciones/crear', {
+            await axios.post('http://localhost:5000/api/postulaciones/crear', {
                 num_control: datosTrabajador.num_control,
                 puestos: seleccionadas
             });

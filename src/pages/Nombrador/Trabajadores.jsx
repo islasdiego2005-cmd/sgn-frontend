@@ -45,7 +45,7 @@ const Trabajadores = () => {
         const obtenerTrabajadores = async () => {
             try {
                 //  Apuntamos a la ruta correcta de trabajadores
-                const respuesta = await axios.get('https://sgn-backend-icvc.onrender.com/api/trabajadores');
+                const respuesta = await axios.get('http://localhost:5000/api/trabajadores');
                 // Mapeamos los campos reales usando los nombres que devuelve tu consulta SQL
                 const datosFormateados = respuesta.data.map(u => ({
                     foto: '/src/assets/imagenes/user.png',
@@ -87,7 +87,7 @@ const Trabajadores = () => {
         try {
             // Llamada al backend para eliminar de la BD
 
-            await axios.delete(`https://sgn-backend-icvc.onrender.com/api/trabajadores/${seleccionado.id}`);
+            await axios.delete(`http://localhost:5000/api/trabajadores/${seleccionado.id}`);
             //  Si la petición fue exitosa, actualizamos la interfaz localmente
             const nuevaLista = trabajadores.filter(t => t.id !== seleccionado.id);
             setTrabajadores(nuevaLista);

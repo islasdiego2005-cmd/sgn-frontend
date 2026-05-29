@@ -7,12 +7,11 @@ function App() {
   // Leemos la ruta actual en la barra de direcciones
   const rutaActual = window.location.pathname;
 
-  // 🔀 Enrutador Condicional Rápido
   if (rutaActual === '/Nombrador/Principal') {
     return <PrincipalNombrador />;
   }
 
-  if (rutaActual === '/trabajador/Dashboard') {
+  if (rutaActual === '/Trabajador/Dashboard') {
     return <Trabajador />;
   }
 

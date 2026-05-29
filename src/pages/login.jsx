@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import logo1 from '../assets/imagenes/logo1.png';
 
 const Login = () => {
 
@@ -23,11 +24,10 @@ const Login = () => {
     try {
 
       const respuesta = await axios.post(
-        'http://localhost:5000/api/auth/login',
-        {
-          num_control: numControl,
-          password: password
-        }
+        'http://localhost:5000/api/auth/login', {
+        num_control: numControl,
+        password: password
+      }
       );
 
       const datosUsuario = respuesta.data.usuario;
@@ -80,48 +80,48 @@ const Login = () => {
   // RECUPERAR PASSWORD
   // ======================================================
 
-/* const handleRecuperarPassword = async (e) => {
-
-  e.preventDefault();
-
-  setMensajeRecuperacion('');
-
-  try {
-
-    const respuesta = await axios.post(
-      'http://localhost:5000/api/auth/recuperar-password',
-      {
-        num_control: numControlRecuperacion,
-        nuevaPassword: nuevaPassword
+  /* const handleRecuperarPassword = async (e) => {
+  
+    e.preventDefault();
+  
+    setMensajeRecuperacion('');
+  
+    try {
+  
+      const respuesta = await axios.post(
+        'http://localhost:5000/api/auth/recuperar-password',
+        {
+          num_control: numControlRecuperacion,
+          nuevaPassword: nuevaPassword
+        }
+      );
+  
+      setMensajeRecuperacion(
+        respuesta.data.mensaje
+      );
+  
+      // Limpiar campos
+      setNumControlRecuperacion('');
+      setNuevaPassword('');
+  
+    } catch (err) {
+  
+      if (err.response?.data?.error) {
+  
+        setMensajeRecuperacion(
+          err.response.data.error
+        );
+  
+      } else {
+  
+        setMensajeRecuperacion(
+          'Error del servidor'
+        );
+  
       }
-    );
-
-    setMensajeRecuperacion(
-      respuesta.data.mensaje
-    );
-
-    // Limpiar campos
-    setNumControlRecuperacion('');
-    setNuevaPassword('');
-
-  } catch (err) {
-
-    if (err.response?.data?.error) {
-
-      setMensajeRecuperacion(
-        err.response.data.error
-      );
-
-    } else {
-
-      setMensajeRecuperacion(
-        'Error del servidor'
-      );
-
     }
-  }
-};
- */
+  };
+   */
 
   return (
     <div className="relative min-h-screen">
@@ -134,7 +134,7 @@ const Login = () => {
         muted
       >
         <source
-          src="/src/assets/videos/fondo.mp4"
+          src="/videos/fondo.mp4"
           type="video/mp4"
         />
       </video>
@@ -146,7 +146,7 @@ const Login = () => {
       <div className="login-container">
 
         <img
-          src="/src/assets/imagenes/logo1.png"
+          src={logo1}
           alt="Logo CPV"
           className="logo"
         />

@@ -77,7 +77,7 @@ const ModalPostulados = ({ isOpen, onClose, nombramiento, fetchNombramientos }) 
                 const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
                 const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
 
-               
+
                 const minFormateados = String(minutos).padStart(2, '0');
                 const segFormateados = String(segundos).padStart(2, '0');
 
@@ -94,8 +94,7 @@ const ModalPostulados = ({ isOpen, onClose, nombramiento, fetchNombramientos }) 
     const obtenerPostulados = async () => {
         setCargando(true);
         try {
-            const response = await axios.get(`http://localhost:5000/api/nombramientos/${nombramiento.id_nombramiento}/postulados`);
-            setPostulados(response.data);
+            const response = await axios.get(`http://localhost:5000/api/nombramientos/${nombramiento.id_nombramiento}/postulados`); setPostulados(response.data);
         } catch (error) {
             console.error("Error al obtener los postulados:", error);
         } finally {
@@ -111,26 +110,26 @@ const ModalPostulados = ({ isOpen, onClose, nombramiento, fetchNombramientos }) 
     };
 
     const obtenerEstiloResultado = (resultado) => {
-    switch (resultado) {
-        case 'Aceptado':
-            return {
-                backgroundColor: '#D1FAE5',
-                color: '#065F46'
-            };
+        switch (resultado) {
+            case 'Aceptado':
+                return {
+                    backgroundColor: '#D1FAE5',
+                    color: '#065F46'
+                };
 
-        case 'Rechazado':
-            return {
-                backgroundColor: '#FEE2E2',
-                color: '#991B1B'
-            };
+            case 'Rechazado':
+                return {
+                    backgroundColor: '#FEE2E2',
+                    color: '#991B1B'
+                };
 
-        default:
-            return {
-                backgroundColor: '#FEF3C7',
-                color: '#92400E'
-            };
-    }
-};
+            default:
+                return {
+                    backgroundColor: '#FEF3C7',
+                    color: '#92400E'
+                };
+        }
+    };
 
     const handleExportarExcel = () => {
         // Preparar datos
@@ -204,7 +203,6 @@ const ModalPostulados = ({ isOpen, onClose, nombramiento, fetchNombramientos }) 
         if (result.isConfirmed) {
             try {
                 const response = await axios.delete(`http://localhost:5000/api/nombramientos/${nombramiento.id_nombramiento}`);
-
                 // --- ALERTA DE ÉXITO ---
                 Swal.fire({
                     title: '¡Eliminado!',

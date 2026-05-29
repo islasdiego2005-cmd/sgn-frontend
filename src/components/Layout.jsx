@@ -12,13 +12,11 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
 
     const toggleMenu = () => setMenuAbierto(!menuAbierto);
 
-    // FUNCIÓN PARA CERRAR SESIÓN Y LIMPIAR EL ALMACENAMIENTO
     const handleCerrarSesion = () => {
         if (onLogout) {
             onLogout();
             return;
         }
-
         localStorage.removeItem('usuario_sgn');
         localStorage.removeItem('usuario');
         localStorage.removeItem('rol');
@@ -27,6 +25,7 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
 
     const nombreUsuario = usuario?.nombre_completo || usuario?.nombre || 'Invitado';
     const matriculaUsuario = usuario?.num_control ? `Matrícula: ${usuario.num_control}` : '';
+    const rolUsuario = usuario?.rol || 'Nombrador';
 
     const opcionesMenu = [
         { nombre: 'Principal', icono: '/src/assets/imagenes/hogar.png' },
@@ -37,7 +36,6 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
 
     return (
         <div style={{ display: 'flex', height: '100vh', width: '100%', backgroundColor: '#C4C4C5', fontFamily: 'sans-serif', overflow: 'hidden' }}>
-
 
             {esMovil && menuAbierto && (
                 <div onClick={toggleMenu} style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', backgroundColor: 'rgba(0,0,0,0.5)', zIndex: 998 }} />
@@ -54,17 +52,12 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                     <div style={{ width: '90px', height: '90px', borderRadius: '50%', backgroundColor: 'white', overflow: 'hidden', border: '3px solid #fff' }}>
                         <img src="/src/assets/imagenes/fotoperfilm.png" alt="Perfil" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
-                    <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem', lineHeight: '1.2' }}>
-                        {nombreUsuario}
-                    </div>
-                    {matriculaUsuario && (
-                        <div style={{ color: '#dbeafe', marginTop: '5px', fontSize: '0.9rem' }}>
-                            {matriculaUsuario}
-                        </div>
-                    )}
+                    <div style={{ color: 'white', fontWeight: 'bold', fontSize: '1rem', lineHeight: '1.2' }}>{nombreUsuario}</div>
+                    {matriculaUsuario && <div style={{ color: '#dbeafe', marginTop: '5px', fontSize: '0.9rem' }}>{matriculaUsuario}</div>}
+                    <div style={{ color: '#4DB6AC', marginTop: '3px', fontSize: '0.9rem', fontWeight: 'bold' }}>{rolUsuario}</div>
                 </div>
 
-                {/* LISTA DE BOTONES DEL MENÚ */}
+                {/* LISTA DE BOTONES */}
                 <nav style={{ flex: 1 }}>
                     {opcionesMenu.map((opcion, index) => (
                         <button
@@ -86,7 +79,7 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                     ))}
                 </nav>
 
-                {/* BOTÓN CERRAR SESIÓN (Funcionalidad Inyectada) */}
+                {/* BOTÓN CERRAR SESIÓN */}
                 <div style={{ borderTop: '1px solid rgba(255,255,255,0.1)', marginTop: 'auto', padding: '0', width: '100%' }}>
                     <button
                         onClick={handleCerrarSesion}
@@ -94,67 +87,31 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                             display: 'flex', alignItems: 'center', gap: '15px', color: 'white', fontSize: '1rem', cursor: 'pointer', padding: '15px 20px', width: '100%',
                             backgroundColor: 'transparent', border: 'none', textAlign: 'left', outline: 'none', transition: 'background-color 0.3s ease', height: '64px'
                         }}
-                        onMouseEnter={(e) => e.currentTarget.style.backgroundColor = 'rgba(255, 255, 255, 0.08)'}
-                        onMouseLeave={(e) => e.currentTarget.style.backgroundColor = 'transparent'}
                     >
-                        <div style={{
-                            backgroundColor: '#4472C4', borderRadius: '6px', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            width: '45px', height: '45px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)', flexShrink: 0
-                        }}>
-                            <img src="/src/assets/imagenes/iconocerrar.png" alt="Logo" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                        <div style={{ backgroundColor: '#4472C4', borderRadius: '6px', padding: '6px', display: 'flex', alignItems: 'center', justifyContent: 'center', width: '45px', height: '45px', boxShadow: '0 2px 4px rgba(0,0,0,0.2)' }}>
+                            <img src="/src/assets/imagenes/iconocerrar.png" alt="Salir" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
                         </div>
-                        <span style={{ fontWeight: '500', userSelect: 'none' }}>Cerrar Sesión</span>
+                        <span style={{ fontWeight: '500' }}>Cerrar Sesión</span>
                     </button>
                 </div>
             </aside>
 
             {/* CONTENIDO DERECHA */}
-            <div style={{
-                flex: 1,
-                display: 'flex',
-                flexDirection: 'column',
-                minWidth: 0,
-                overflowX: 'hidden'
-            }}>
-                <header style={{
-                    backgroundColor: '#888888',
-                    padding: '10px 20px',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'space-between',
-                    color: 'white',
-                    height: '60px'
-                }}>
-                    {/* Izquierda: Menú y Título */}
+            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', minWidth: 0, overflowX: 'hidden' }}>
+                <header style={{ backgroundColor: '#888888', padding: '10px 20px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', color: 'white', height: '60px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                         {esMovil && (
                             <button onClick={toggleMenu} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
                                 <img src="/src/assets/imagenes/menu.png" alt="Menú" style={{ width: '40px', height: '40px' }} />
                             </button>
                         )}
-                        <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>
-                            {esMovil ? 'SGN' : 'Sistema Gestor de Nombramientos'}
-                        </h2>
+                        <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>Sistema de Gestión</h2>
                     </div>
-
-
-                    <img
-                        src="/src/assets/imagenes/logo1.png"
-                        alt="CPV"
-                        style={{ height: '40px', objectFit: 'contain' }}
-                    />
+                    {/* Logo CPV */}
+                    <img src="/src/assets/imagenes/logo1.png" alt="CPV" style={{ height: '40px', objectFit: 'contain' }} />
                 </header>
 
-
-                <main style={{
-                    flex: 1,
-                    padding: esMovil ? '15px' : '30px',
-                    overflowY: 'auto',
-                    overflowX: 'auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: '20px'
-                }}>
+                <main style={{ flex: 1, padding: esMovil ? '15px' : '30px', overflowY: 'auto', backgroundColor: '#C4C4C5' }}>
                     {children}
                 </main>
             </div>

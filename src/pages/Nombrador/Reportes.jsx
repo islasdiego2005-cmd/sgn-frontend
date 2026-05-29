@@ -18,8 +18,8 @@ const Reportes = () => {
     // Función para obtener nombramientos desde la API y mapearlos para la UI
     const fetchNombramientos = async () => {
         try {
-            const response = await axios.get('https://sgn-backend-icvc.onrender.com/api/nombramientos');
-            const datosMapeados = res.data.map(item => {
+            const response = await axios.get('http://localhost:5000/api/nombramientos');
+            const datosMapeados = response.data.map(item => {
                 const fechaRaw = item.fecha_carga || item.fecha || item.fechaCarga || item.created_at || item.createdAt || null;
                 let fecha = 'S/F';
                 if (fechaRaw) {
@@ -147,7 +147,7 @@ const Reportes = () => {
             // Postulados sheet: obtener postulados desde API para este nombramiento
             try {
                 const id = item.id || item.raw?.id_nombramiento;
-                const resp = await axios.get(`https://sgn-backend-icvc.onrender.com/api/nombramientos/${id}/postulados`); 
+                const resp = await axios.get(`http://localhost:5000/api/nombramientos/${id}/postulados`); 
                 const postulados = resp.data || [];
 
                 const postuladosRows = postulados.map(p => ({

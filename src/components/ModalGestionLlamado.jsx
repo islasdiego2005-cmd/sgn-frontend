@@ -61,7 +61,7 @@ const ModalGestionLlamado = ({
 
                 // TRAER EXTRAS
                 const resExtras = await axios.get(
-                    `https://sgn-backend-icvc.onrender.com/api/trabajadores/no-postulados/${id}`
+                    `http://localhost:5000/api/trabajadores/no-postulados/${id}`
                 );
 
                 setTrabajadoresExtra(resExtras.data);
@@ -171,7 +171,7 @@ const ModalGestionLlamado = ({
             try {
                 // USAMOS EL ID QUE VIENE EN LA PROP
                 const id = nombramiento?.id_nombramiento;
-                const res = await axios.get(`https://sgn-backend-icvc.onrender.com/api/nombramientos/${id}/detalles`);
+                const res = await axios.get(`http://localhost:5000/api/nombramientos/${id}/detalles`);
                 setSolicitudes(res.data);
             } catch (err) {
                 console.error("Error al cargar solicitudes:", err);
@@ -663,7 +663,7 @@ const ModalGestionLlamado = ({
                                 }
 
                                 // Enviar al backend
-                                await axios.put('https://sgn-backend-icvc.onrender.com/api/postulaciones/resultado', {
+                                await axios.put('http://localhost:5000/api/postulaciones/resultado', {
                                     id_nombramiento: nombramiento?.id_nombramiento, // <--- MANDAMOS EL ID DIRECTO
                                     seleccionados: trabajadoresSeleccionados
                                 });
