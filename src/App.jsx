@@ -1,23 +1,35 @@
 import React from 'react';
+import {
+  Routes,
+  Route
+} from 'react-router-dom';
+
 import Login from "./pages/login.jsx";
 import PrincipalNombrador from "./pages/Nombrador/Principal.jsx";
 import Trabajador from "./pages/trabajador.jsx";
 
 function App() {
 
-  // LEER EL HASH EN VEZ DEL PATHNAME
-  const rutaActual = window.location.hash;
+  return (
+    <Routes>
 
-  if (rutaActual === '#/Nombrador/Principal') {
-    return <PrincipalNombrador />;
-  }
+      <Route
+        path="/"
+        element={<Login />}
+      />
 
-  if (rutaActual === '#/Trabajador/Dashboard') {
-    return <Trabajador />;
-  }
+      <Route
+        path="/Nombrador/Principal"
+        element={<PrincipalNombrador />}
+      />
 
-  // Ruta por defecto
-  return <Login />;
+      <Route
+        path="/Trabajador/Dashboard"
+        element={<Trabajador />}
+      />
+
+    </Routes>
+  );
 }
 
 export default App;
