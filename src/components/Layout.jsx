@@ -6,6 +6,7 @@ import iconoTrabajador from '../assets/imagenes/trabajador.png';
 import iconoConfig from '../assets/imagenes/configuraciones.png';
 import fotoPerfil from '../assets/imagenes/fotoperfilm.png';
 import iconoCerrar from '../assets/imagenes/iconocerrar.png';
+import iconoMenu from '../assets/imagenes/menu.png';
 
 
 const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout }) => {
@@ -113,8 +114,11 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                     <div style={{ display: 'flex', alignItems: 'center', gap: '15px' }}>
                         {esMovil && (
                             <button onClick={toggleMenu} style={{ background: 'none', border: 'none', cursor: 'pointer' }}>
-                                <img src="/src/assets/imagenes/menu.png" alt="Menú" style={{ width: '40px', height: '40px' }} />
-                            </button>
+                                <img
+                                    src={iconoMenu}
+                                    alt="Menú"
+                                    style={{ width: '40px', height: '40px' }}
+                                />                            </button>
                         )}
                         <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>Sistema de Gestión</h2>
                     </div>
