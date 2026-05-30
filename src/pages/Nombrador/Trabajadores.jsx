@@ -5,9 +5,9 @@ import ModalTrabajador from '../../components/ModalTrabajador';
 import ModalEditarTrabajador from '../../components/ModalEditarTrabajador';
 import ModalVerTrabajador from '../../components/ModalVerTrabajador';
 import ModalConfirmacion from '../../components/ModalConfirmacion';
-import user from '../../assets/imagenes/user.png';
-
 const API_URL = import.meta.env.VITE_API_URL;
+
+
 const Trabajadores = () => {
     const [esMovil, setEsMovil] = useState(window.innerWidth < 1024);
     const [fechaActual, setFechaActual] = useState(new Date());
@@ -15,11 +15,12 @@ const Trabajadores = () => {
     const [busqueda, setBusqueda] = useState('');
     const [filtroEstatus, setFiltroEstatus] = useState('Todos');
     const [filtroCurso, setFiltroCurso] = useState('Todos');
+
+    // --- ESTADOS PARA LOS 4 MODALES ---
     const [modalAgregar, setModalAgregar] = useState(false);
     const [modalEditar, setModalEditar] = useState(false);
     const [modalVer, setModalVer] = useState(false);
     const [modalEliminar, setModalEliminar] = useState(false);
-
 
     const [seleccionado, setSeleccionado] = useState(null);
 
@@ -39,20 +40,21 @@ const Trabajadores = () => {
     const opcionesFecha = { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' };
     const fechaFormateada = fechaActual.toLocaleDateString('es-MX', opcionesFecha);
     const horaFormateada = fechaActual.toLocaleTimeString('es-MX', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+    // --- DATOS REALES DESDE EL BACKEND ---
     const [trabajadores, setTrabajadores] = useState([]);
 
     useEffect(() => {
         const obtenerTrabajadores = async () => {
             try {
+                //  Apuntamos a la ruta correcta de trabajadores
                 const respuesta = await axios.get(`${API_URL}/api/trabajadores`);
-
+                // Mapeamos los campos reales usando los nombres que devuelve tu consulta SQL
                 const datosFormateados = respuesta.data.map(u => ({
-                    // USAMOS LA VARIABLE IMPORTADA 'user' AQUÍ
-                    foto: u.foto || user,
-                    id: u.num_control || 'S/N',
-                    nombre: u.nombre_completo || 'Sin Nombre',
-                    cursos: u.cursos || 'Ninguno',
-                    estatus: u.estatus || 'Apto'
+                    foto: '/src/assets/imagenes/user.png',
+                    id: u.num_control || 'S/N',            // Mapea num_control
+                    nombre: u.nombre_completo || 'Sin Nombre', // Mapea nombre_completo
+                    cursos: u.cursos || 'Ninguno',         // Lee los cursos dinámicos de la BD
+                    estatus: u.estatus || 'Apto'           // Lee el estatus dinámico de la BD
                 }));
 
                 setTrabajadores(datosFormateados);
@@ -63,8 +65,8 @@ const Trabajadores = () => {
         };
 
         obtenerTrabajadores();
+        // Agregamos una pequeña dependencia para que se actualice al abrir/cerrar modales si se requiere
     }, [modalAgregar, modalEditar, modalEliminar]);
-    
     const trabajadoresFiltrados = trabajadores.filter((t) => {
         const coincideBusqueda = t.nombre.toLowerCase().includes(busqueda.toLowerCase()) || t.id.toLowerCase().includes(busqueda.toLowerCase());
         const coincideEstatus = filtroEstatus === 'Todos' || t.estatus === filtroEstatus;
@@ -156,13 +158,24 @@ const Trabajadores = () => {
                             <option value="Próximo a vencer">Próximo a vencer</option>
                             <option value="Incapacidad">Incapacidad</option>
                         </select>
+                        {/* SELECTOR ACTUALIZADO: Lista completa con las 15 especialidades unificadas */}
                         <select value={filtroCurso} onChange={(e) => setFiltroCurso(e.target.value)} style={{ padding: '8px 12px', borderRadius: '6px', border: '1px solid #d1d5db', outline: 'none', fontSize: '0.9rem', backgroundColor: 'white', cursor: 'pointer' }}>
-                            <option value="Todos">Todos los cursos</option>
-                            <option value="CHOFER ESPECIAL">Chofer Especial</option>
+                            <option value="Todos">Todos los cursos / Especialidad</option>
+                            <option value="CHOFER ESPECIAL">CHOFER ESPECIAL</option>
+                            <option value="BANDERA">BANDERA</option>
                             <option value="MG">MG</option>
-                            <option value="GARROTERO">Garrotero</option>
-                            <option value="WINCH">Winch</option>
-                            <option value="BANDERA">Bandera</option>
+                            <option value="WINCH">WINCH</option>
+                            <option value="TRASCAVISTA">TRASCAVISTA</option>
+                            <option value="GRUA PATO">GRUA PATO</option>
+                            <option value="TRACKMOBILE">TRACKMOBILE</option>
+                            <option value="GARROTERO">GARROTERO</option>
+                            <option value="MC CH">MC CH</option>
+                            <option value="TRINCADOR">TRINCADOR</option>
+                            <option value="PORTALONERO">PORTALONERO</option>
+                            <option value="CHOFER GENERAL">CHOFER GENERAL</option>
+                            <option value="CARCHEADOR">CARCHEADOR</option>
+                            <option value="LAVADOR">LAVADOR</option>
+                            <option value="SECADOR">SECADOR</option>
                         </select>
                     </div>
 
@@ -187,13 +200,7 @@ const Trabajadores = () => {
                             {trabajadoresFiltrados.length > 0 ? (
                                 trabajadoresFiltrados.map((t, idx) => (
                                     <tr key={t.id} style={{ borderBottom: '1px solid #f3f4f6', backgroundColor: idx % 2 === 0 ? 'white' : '#f9fafb' }}>
-                                        <td style={{ padding: '6px 10px' }}><div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#e5e7eb', overflow: 'hidden' }}>
-                                            <img
-                                                src={t.foto || user}
-                                                alt={`Foto de ${t.nombre}`}
-                                                style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                            />
-                                        </div></td>
+                                        <td style={{ padding: '6px 10px' }}><div style={{ width: '32px', height: '32px', borderRadius: '50%', backgroundColor: '#e5e7eb', overflow: 'hidden' }}><img src={t.foto} alt="foto" style={{ width: '100%', height: '100%', objectFit: 'cover' }} /></div></td>
                                         <td style={{ padding: '10px', color: '#4b5563', fontWeight: '600' }}>{t.id}</td>
                                         <td style={{ padding: '10px', fontWeight: 'bold', color: '#111827' }}>{t.nombre}</td>
                                         <td style={{ padding: '10px', color: '#6b7280' }}><div style={{ maxWidth: '150px', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }} title={t.cursos}>{t.cursos}</div></td>

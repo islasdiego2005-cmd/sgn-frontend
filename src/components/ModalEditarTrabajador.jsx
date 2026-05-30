@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
+
 const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
     // 15 cursos unificados con los que estás manejando en tus modales
     const cursosDisponibles = [
@@ -12,13 +13,16 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
     // --- ESTADOS PARA CAPTURAR LOS CAMBIOS ---
     const [nombre, setNombre] = useState('');
     const [estatus, setEstatus] = useState('Apto');
+    const [credencial, setCredencial] = useState('Vigente'); // NUEVO ESTADO INDEPENDIENTE
     const [cursosSeleccionados, setCursosSeleccionados] = useState([]);
     const [cargando, setCargando] = useState(false);
+
     // Cuando el modal se abre con un trabajador, sincronizamos los estados con sus datos actuales
     useEffect(() => {
         if (trabajador) {
             setNombre(trabajador.nombre || '');
             setEstatus(trabajador.estatus || 'Apto');
+            setCredencial(trabajador.credencial || 'Vigente'); // Carga la credencial si existe
 
             if (trabajador.cursos && trabajador.cursos !== 'Ninguno') {
                 const cursosArray = trabajador.cursos.split(',').map(c => c.trim());
@@ -29,7 +33,6 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
         }
     }, [trabajador, isOpen]);
 
-
     useEffect(() => {
         const handleKeyDown = (e) => { if (e.key === 'Escape') onClose(); };
         window.addEventListener('keydown', handleKeyDown);
@@ -37,7 +40,6 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
     }, [onClose]);
 
     if (!isOpen || !trabajador) return null;
-
 
     const handleCursoToggle = (curso) => {
         setCursosSeleccionados(prev =>
@@ -56,9 +58,9 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
             const respuesta = await axios.put(`http://localhost:5000/api/trabajadores/${trabajador.id}`, {
                 nombre_completo: nombre,
                 estatus: estatus,
+                credencial: credencial, // SE ENVÍA EL CAMPO SEPARADO AL BACKEND
                 cursos: cursosTexto
             });
-
 
             Swal.fire({
                 title: '¡Actualizado!',
@@ -71,7 +73,6 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
             onClose();
         } catch (error) {
             console.error("Error al actualizar:", error);
-
 
             Swal.fire({
                 title: 'Error',
@@ -90,15 +91,31 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
 
                 {/* Encabezado */}
                 <div style={{ position: 'relative', padding: '20px 30px', backgroundColor: '#4472C4' }}>
-                    <h2 style={{ color: 'white', margin: 0, fontSize: '1.2rem', fontWeight: 'bold', paddingRight: '30px' }}>
+                    <h2 style={{ color: 'white', margin: 0, fontSize: '1.2rem', fontWeight: 'bold', paddingRight: '40px' }}>
                         Editar Trabajador: {trabajador.id}
                     </h2>
-                    <button onClick={onClose} style={{
-                        position: 'fixed',
-                        top: '20px',
-                        right: '20px',
-                        zIndex: '1000', background: 'rgba(255,255,255,0.1)', border: 'none', color: 'white', width: '30px', height: '36px', borderRadius: '50%', fontSize: '1.1rem', cursor: 'pointer', fontWeight: 'bold', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'background 0.2s'
-                    }}
+                    
+                    
+                    <button 
+                        onClick={onClose} 
+                        style={{
+                            position: 'absolute',
+                            top: '0px',
+                            right: '25px',
+                            background: 'rgba(255,255,255,0.1)', 
+                            border: 'none', 
+                            color: 'white', 
+                            width: '30px', 
+                            height: '30px', 
+                            borderRadius: '50%', 
+                            fontSize: '1rem', 
+                            cursor: 'pointer', 
+                            fontWeight: 'bold', 
+                            display: 'flex', 
+                            alignItems: 'center', 
+                            justifyContent: 'center', 
+                            transition: 'background 0.2s'
+                        }}
                         onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(255,4b,4b,0.6)'}
                         onMouseLeave={(e) => e.currentTarget.style.background = 'rgba(255,255,255,0.1)'}
                     >
@@ -110,6 +127,7 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
                 <div className="modal-scroll-custom" style={{ overflowY: 'auto', padding: '30px', maxHeight: '75vh', backgroundColor: '#f9fafb' }}>
                     <form onSubmit={handleGuardarCambios} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
 
+                        {/* FILA 1: MATRÍCULA Y NOMBRE */}
                         <div style={formGrid}>
                             <div>
                                 <label style={labelStyle}>Matrícula / ID (No editable)</label>
@@ -120,13 +138,19 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
                                 <input
                                     type="text"
                                     value={nombre}
-                                    onChange={(e) => setNombre(e.target.value)}
+                                    onChange={(e) => {
+                                        const valor = e.target.value;
+                                        if (/^[a-zA-ZáéíóúüñÁÉÍÓÚÜÑ\s]*$/.test(valor)) {
+                                            setNombre(valor);
+                                        }
+                                    }}
                                     required
                                     style={inputStyle}
                                 />
                             </div>
                         </div>
 
+                        {/* FILA 2: DEPARTAMENTO Y ESTATUS LABORAL */}
                         <div style={formGrid}>
                             <div>
                                 <label style={labelStyle}>Departamento</label>
@@ -137,17 +161,35 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
                                 </select>
                             </div>
                             <div>
-                                <label style={labelStyle}>Estatus</label>
+                                <label style={labelStyle}>Estatus Laboral</label>
                                 <select
                                     value={estatus}
                                     onChange={(e) => setEstatus(e.target.value)}
                                     style={inputStyle}
                                 >
                                     <option value="Apto">Apto</option>
-                                    <option value="Próximo a vencer">Próximo a vencer</option>
                                     <option value="Incapacidad">Incapacidad</option>
+                                    <option value="Con Acta Administrativa">Con Acta Administrativa</option>
                                 </select>
                             </div>
+                        </div>
+
+                        {/* FILA 3: ESTADO DE LA CREDENCIAL (Aislado) */}
+                        <div style={formGrid}>
+                            <div>
+                                <label style={labelStyle}>Vigencia de Credencial</label>
+                                <select
+                                    value={credencial}
+                                    onChange={(e) => setCredencial(e.target.value)}
+                                    style={inputStyle}
+                                >
+                                    <option value="Vigente">Vigente</option>
+                                    <option value="Próxima a vencer">Próxima a vencer</option>
+                                    <option value="Vencida">Vencida</option>
+                                </select>
+                            </div>
+                            {/* Espacio en blanco para mantener la simetría de 2 columnas */}
+                            <div></div>
                         </div>
 
                         {/* Caja de Checkboxes de Cursos */}
@@ -161,14 +203,14 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
                                             key={curso}
                                             style={{
                                                 display: 'flex',
-                                                alignItems: 'center', // Centra verticalmente el cuadrito con el texto
-                                                justifyContent: 'flex-start', // Asegura que todo empiece desde la izquierda
-                                                gap: '8px', // Controla el espacio exacto entre el checkbox y el texto
+                                                alignItems: 'center', 
+                                                justifyContent: 'flex-start', 
+                                                gap: '8px', 
                                                 fontSize: '12px',
                                                 fontWeight: isSelected ? 'bold' : 'normal',
                                                 color: isSelected ? '#4472C4' : '#4b5563',
                                                 cursor: 'pointer',
-                                                width: '100%' // Asegura que el label tome todo el espacio de su columna
+                                                width: '100%' 
                                             }}
                                         >
                                             <input
@@ -178,15 +220,15 @@ const ModalEditarTrabajador = ({ isOpen, onClose, trabajador }) => {
                                                 style={{
                                                     accentColor: '#4472C4',
                                                     margin: 0,
-                                                    width: '16px', // Forza un tamaño estricto para el checkbox
+                                                    width: '16px', 
                                                     height: '16px',
-                                                    flexShrink: 0 // Evita que el checkbox se aplaste si el texto es largo
+                                                    flexShrink: 0 
                                                 }}
                                             />
                                             <span style={{
                                                 lineHeight: '1.3',
-                                                wordBreak: 'break-word', // Obliga al texto a bajar de línea si no cabe en la columna
-                                                textAlign: 'left' // Alinea el texto a la izquierda estrictamente
+                                                wordBreak: 'break-word', 
+                                                textAlign: 'left' 
                                             }}>
                                                 {curso}
                                             </span>

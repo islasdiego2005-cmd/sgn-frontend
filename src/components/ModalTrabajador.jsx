@@ -3,8 +3,6 @@ import axios from 'axios';
 import Swal from 'sweetalert2';
 import { Plus, Eye, Edit, Trash2, User } from 'lucide-react';
 
-const API_URL = import.meta.env.VITE_API_URL;
-
 const ModalTrabajador = ({ isOpen, onClose }) => {
     // ESTADOS PARA CAPTURAR LOS INPUTS
     const [numControl, setNumControl] = useState('');
@@ -47,11 +45,12 @@ const ModalTrabajador = ({ isOpen, onClose }) => {
                 password: passwordInicial
             };
 
-            await axios.post(`${API_URL}/api/auth/register`, nuevoUsuario);
-
-            onClose();
+            await axios.post('http://localhost:5000/api/auth/register', nuevoUsuario);
 
 
+            onClose(); 
+
+     
             await Swal.fire({
                 icon: 'success',
                 title: '¡Registro Exitoso!',
@@ -60,8 +59,8 @@ const ModalTrabajador = ({ isOpen, onClose }) => {
             });
 
             // 3. Eliminamos window.location.reload()
-
-
+   
+            
             setNumControl('');
             setNombreCompleto('');
             setCursosSeleccionados([]);

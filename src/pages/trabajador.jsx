@@ -1,11 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
-import fotoperfilm from '../assets/imagenes/fotoperfilm.png';
-import iconocerrar from '../assets/imagenes/iconocerrar.png';
-import logo1 from '../assets/imagenes/logo1.png';
 
-const API_URL = import.meta.env.VITE_API_URL;
 const Trabajador = () => {
     const [seleccionadas, setSeleccionadas] = useState([]);
     const [datosTrabajador, setDatosTrabajador] = useState(null);
@@ -16,6 +12,9 @@ const Trabajador = () => {
     const [yaPostulado, setYaPostulado] = useState(false);
     const [cargandoDisponibles, setCargandoDisponibles] = useState(true);
 
+    // NUEVOS ESTADOS PARA GESTIONAR COLORES POR TURNO
+    const [turnoActivo, setTurnoActivo] = useState(null);
+    const [puestosPostulados, setPuestosPostulados] = useState([]);
 
     useEffect(() => {
 
@@ -30,10 +29,8 @@ const Trabajador = () => {
                         )
                     );
 
-
-
-                // 2. Usamos esa variable en lugar del localhost
-                const res = await axios.get(`${API_URL}/api/trabajadores/${usuario.num_control}/resultado`);
+                const res = await axios.get(
+                    `http://localhost:5000/api/trabajadores/${usuario.num_control}/resultado`);
 
                 if (res.data.resultado) {
                     Swal.fire({
@@ -73,9 +70,8 @@ const Trabajador = () => {
 
             try {
 
-
                 const resEspecialidades = await axios.get(
-                    `${API_URL}/api/convocatorias/disponibles`
+                    'http://localhost:5000/api/convocatorias/disponibles'
                 );
 
                 setEspecialidadesDisponibles(resEspecialidades.data);
@@ -84,10 +80,12 @@ const Trabajador = () => {
                 if (usuarioObj) {
 
                     const resCursos = await axios.get(
-                        `${API_URL}/api/trabajadores/${usuarioObj.num_control}/cursos`
+                        `http://localhost:5000/api/trabajadores/${usuarioObj.num_control}/cursos`
                     );
 
                     console.log("CURSOS DEL TRABAJADOR:", resCursos.data);
+
+
 
                     const cursosNormalizados = resCursos.data.map(curso => {
 
@@ -108,11 +106,18 @@ const Trabajador = () => {
 
                     setCursosTrabajador(cursosNormalizados);
 
+
                     const resPostulacion = await axios.get(
-                        `${API_URL}/api/trabajadores/${usuarioObj.num_control}/postulacion-activa`
+                        `http://localhost:5000/api/trabajadores/${usuarioObj.num_control}/postulacion-activa`
                     );
 
                     setYaPostulado(resPostulacion.data.yaPostulado);
+                    
+                    // GUARDAR TURNO Y PUESTOS PARA PINTAR EL GLOBO
+                    if (resPostulacion.data.yaPostulado) {
+                        setPuestosPostulados(resPostulacion.data.puestos || []);
+                        setTurnoActivo(resPostulacion.data.turno || '2do Turno (Día)');
+                    }
                 }
 
             } catch (error) {
@@ -162,7 +167,7 @@ const Trabajador = () => {
         }
 
         try {
-            await axios.post(`${API_URL}/api/postulaciones/crear`, {
+            await axios.post('http://localhost:5000/api/postulaciones/crear', {
                 num_control: datosTrabajador.num_control,
                 puestos: seleccionadas
             });
@@ -175,8 +180,10 @@ const Trabajador = () => {
                 confirmButtonColor: '#1a8a34'
             });
 
-            setSeleccionadas([]);
+            // SETEAR DATOS VISUALES AL ENVIAR
+            setPuestosPostulados(seleccionadas);
             setYaPostulado(true);
+            setSeleccionadas([]);
 
         } catch (error) {
             console.error(error);
@@ -210,6 +217,15 @@ const Trabajador = () => {
         "LAVADOR",
         "SECADOR"
     ];
+
+    // FUNCIÓN PARA SACAR EL COLOR EXACTO BASADO EN EL TURNO
+    const getColorTurno = (turno) => {
+        if (!turno) return '#16a34a'; // Verde genérico
+        if (turno.includes('1er') || turno.toLowerCase().includes('noche')) return '#1e1b4b'; // Noche (Azul muy oscuro)
+        if (turno.includes('2do') || turno.toLowerCase().includes('día')) return '#eab308'; // Día (Amarillo/Dorado)
+        if (turno.includes('3er') || turno.toLowerCase().includes('tarde')) return '#ea580c'; // Tarde (Naranja)
+        return '#16a34a';
+    };
 
     return (
 
@@ -273,9 +289,8 @@ const Trabajador = () => {
                             border: '4px solid white'
                         }}
                     >
-                        {/* Imagen de Perfil */}
                         <img
-                            src={fotoperfilm}
+                            src="/src/assets/imagenes/fotoperfilm.png"
                             alt="Perfil"
                             style={{
                                 width: '100%',
@@ -346,12 +361,8 @@ const Trabajador = () => {
                         boxShadow: '0 2px 4px rgba(0,0,0,0.2)',
                         flexShrink: 0
                     }}>
-                        {/* Icono Cerrar */}
-                        <img
-                            src={iconocerrar}
-                            alt="Cerrar sesión"
-                            style={{ width: '100%', height: '100%', objectFit: 'contain' }}
-                        />                    </div>
+                        <img src="/src/assets/imagenes/iconocerrar.png" alt="Cerrar sesión" style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                    </div>
                     <span style={{ fontWeight: '500', userSelect: 'none' }}>Cerrar Sesión</span>
                 </button>
 
@@ -384,9 +395,8 @@ const Trabajador = () => {
                             : 'Sistema Gestor de Nombramientos'}
                     </h2>
 
-                    {/* Logo */}
                     <img
-                        src={logo1}
+                        src="/src/assets/imagenes/logo1.png"
                         alt="Logo"
                         style={{ height: '40px' }}
                     />
@@ -464,43 +474,44 @@ const Trabajador = () => {
 
                             const esDisponible =
                                 estaEnConvocatoria && tieneCurso;
+                                
+                            const esPostulado = puestosPostulados.includes(categoriaNormalizada);
 
                             let bgColor;
                             let textColor;
                             let borderColor;
                             let cursorStyle;
 
+                            // LÓGICA DE ESTILOS ACTUALIZADA PARA RESALTAR EL ELEGIDO
                             if (yaPostulado) {
-
-                                bgColor = '#e5e7eb';
-                                textColor = '#9ca3af';
-                                borderColor = '#d1d5db';
-                                cursorStyle = 'not-allowed';
-
+                                if (esPostulado) {
+                                    bgColor = '#f0fdf4'; // Fondo claro para el elegido
+                                    textColor = getColorTurno(turnoActivo);
+                                    borderColor = getColorTurno(turnoActivo);
+                                    cursorStyle = 'not-allowed';
+                                } else {
+                                    bgColor = '#e5e7eb';
+                                    textColor = '#9ca3af';
+                                    borderColor = '#d1d5db';
+                                    cursorStyle = 'not-allowed';
+                                }
                             } else if (!esDisponible) {
-
-
                                 bgColor = '#d1d5db';
                                 textColor = '#6b7280';
                                 borderColor = '#d1d5db';
                                 cursorStyle = 'not-allowed';
 
                             } else if (estaSeleccionada) {
-
-
                                 bgColor = 'white';
                                 textColor = '#2563eb';
                                 borderColor = '#2563eb';
                                 cursorStyle = 'pointer';
 
                             } else {
-
-
                                 bgColor = '#2563eb';
                                 textColor = 'white';
                                 borderColor = '#2563eb';
                                 cursorStyle = 'pointer';
-
                             }
 
                             return (
@@ -531,6 +542,7 @@ const Trabajador = () => {
                                         }
                                     }}
                                     style={{
+                                        position: 'relative', // NECESARIO PARA EL GLOBO
                                         height: '90px',
                                         borderRadius: '10px',
                                         border: `2px solid ${borderColor}`,
@@ -540,12 +552,32 @@ const Trabajador = () => {
                                         color: textColor,
                                         transition: 'all 0.2s ease',
                                         opacity:
-                                            (esDisponible && !yaPostulado)
+                                            (esDisponible && !yaPostulado) || esPostulado
                                                 ? 1
                                                 : 0.6
                                     }}
                                 >
                                     {cat}
+                                    
+                                    {/* GLOBO DE POSTULADO */}
+                                    {esPostulado && (
+                                        <span style={{
+                                            position: 'absolute',
+                                            top: '-10px',
+                                            right: '-10px',
+                                            backgroundColor: getColorTurno(turnoActivo),
+                                            color: 'white',
+                                            fontSize: '11px',
+                                            padding: '4px 8px',
+                                            borderRadius: '12px',
+                                            boxShadow: '0 2px 4px rgba(0,0,0,0.3)',
+                                            zIndex: 10,
+                                            fontWeight: 'bold',
+                                            textTransform: 'uppercase'
+                                        }}>
+                                            Postulado
+                                        </span>
+                                    )}
                                 </button>
 
                             );
