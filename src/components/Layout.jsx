@@ -118,9 +118,9 @@ const Layout = ({ children, seccionActiva, onChangeSeccion, usuario, onLogout })
                                     src={iconoMenu}
                                     alt="Menú"
                                     style={{ width: '40px', height: '40px' }}
-                                />                            </button>
+                                /></button>
                         )}
-                        <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>Sistema de Gestión</h2>
+                        <h2 style={{ margin: 0, fontSize: '1.2rem', fontWeight: 'bold' }}>Sistema Gestor de Nombramientos</h2>
                     </div>
                     {/* Logo CPV */}
                     <img src={logo1} alt="CPV" style={{ height: '40px', objectFit: 'contain' }} />
