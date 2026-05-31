@@ -1,0 +1,244 @@
+/* ==========================================
+   CONTENEDOR GENERAL
+========================================== */
+
+.config-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: nowrap;
+    width: 100%;
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.config-titulo {
+    font-size: 2rem;
+    color: #122C5F;
+    margin: 0;
+    font-weight: bold;
+}
+
+.config-titulo.movil {
+    font-size: 1.5rem;
+}
+
+.config-fecha {
+    text-align: right;
+    color: #717171;
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.config-fecha.movil {
+    font-size: 0.8rem;
+}
+
+.config-hora {
+    font-size: 1.2rem;
+    color: #122C5F;
+    display: block;
+    font-weight: bold;
+}
+
+.config-hora.movil {
+    font-size: 1rem;
+}
+
+.config-wrapper {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.config-card {
+    background: white;
+    border-radius: 12px;
+    padding: 40px; /* <--- Esto es mucho para celular */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    width: 100%;
+    max-width: 850px;
+}
+
+.config-card.movil {
+    padding: 25px;
+}
+
+/* ==========================================
+   SECCIONES
+========================================== */
+
+.section-style {
+    margin-bottom: 35px;
+    padding-bottom: 30px;
+    border-bottom: 2px solid #f3f4f6;
+}
+
+.section-style:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-size: 1.4rem;
+    color: #122C5F;
+    margin: 0 0 5px;
+    font-weight: bold;
+}
+
+.section-subtitle {
+    font-size: 0.9rem;
+    color: #6b7280;
+    margin: 0 0 25px;
+}
+
+/* ==========================================
+   FORMULARIOS
+========================================== */
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-label {
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #4b5563;
+    margin-bottom: 8px;
+}
+
+.input-style {
+    padding: 12px 15px;
+    border: 1px solid #d1d5db;
+    box-sizing: border-box;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    outline: none;
+    color: #1f2937;
+    background-color: #f9fafb;
+}
+
+.input-disabled {
+    background-color: #e5e7eb;
+    color: #9ca3af;
+    cursor: not-allowed;
+    border: 1px solid #e5e7eb;
+}
+
+/* ==========================================
+   ESPECIALIDADES
+========================================== */
+
+.especialidad-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    width: 100%;
+}
+
+/* POR ESTO */
+.especialidad-input {
+    flex: 1;
+    min-width: 0; /* <--- IMPORTANTE: Permite que el input se encoja */
+    width: 100%;
+    height: 42px;
+}
+
+.especialidad-lista {
+    list-style: none;
+    margin: 8px 0 0;
+    padding: 4px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    max-height: 120px;
+    overflow-y: auto;
+    background-color: #fff;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.especialidad-item {
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    border-bottom: 1px solid #f3f4f6;
+}
+
+.especialidad-item:hover {
+    background-color: #f3f4f6;
+}
+
+/* ==========================================
+   BOTONES
+========================================== */
+
+.btn-primary {
+    background-color: #1a8a34;
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0 4px 6px rgba(26, 138, 52, 0.2);
+    transition: 0.2s;
+}
+
+.btn-primary:hover {
+    transform: translateY(-2px);
+}
+
+.btn-accion {
+    background-color: #122C5F;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    font-weight: bold;
+    cursor: pointer;
+    height: 42px;
+    padding: 0 16px;
+    white-space: nowrap;
+}
+
+.btn-accion:hover {
+    opacity: 0.9;
+}
+
+/* ==========================================
+   FOOTER
+========================================== */
+
+.config-footer {
+    margin-top: 40px;
+    display: flex;
+    justify-content: flex-end;
+    padding-top: 20px;
+    border-top: 1px solid #e5e7eb;
+}
+
+/* ==========================================
+   RESPONSIVE
+========================================== */
+
+@media (max-width: 768px) {
+    .especialidad-container {
+        flex-direction: column;
+    }
+
+    .especialidad-input {
+        min-width: 100%;
+        width: 100%;
+    }
+
+    .btn-accion {
+        width: 100%;
+    }
+}

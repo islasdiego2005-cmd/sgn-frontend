@@ -1,0 +1,660 @@
+/* ========================================== CONTENEDOR GENERAL ========================================== */
+.reportes-container {
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* ========================================== HEADER ========================================== */
+.reportes-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.reportes-titulo {
+    margin: 0;
+    color: #122C5F;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.reportes-fecha {
+    text-align: right;
+    color: #717171;
+}
+
+.reportes-hora {
+    display: block;
+    color: #122C5F;
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+/* ========================================== FILTROS ========================================== */
+/* Contenedor padre */
+.reportes-filtros {
+    display: flex;
+    align-items: center;
+    /* Alinea todo al centro verticalmente */
+    gap: 12px;
+    background: #ffffff;
+    padding: 15px 20px;
+    border-radius: 12px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, .05);
+    flex-wrap: nowrap;
+    /* OBLIGA a que no bajen de línea */
+}
+
+.input-busqueda {
+    flex: 3;
+    min-width: 300px;
+}
+
+.input-filtro {
+    height: 48px;
+    /* Altura fija unificada */
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    padding: 0 15px;
+    font-size: 0.95rem;
+    background: white;
+    box-sizing: border-box;
+    /* Crucial para que el padding no desborde el alto */
+}
+
+.botones-filtros {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    /* Evita que los botones se encojan */
+}
+
+/* Distribución de espacios */
+/* Buscador crece */
+.input-busqueda {
+    flex: 2;
+}
+
+/* Otros elementos */
+.input-fecha {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+    /* Limitamos el ancho máximo de la fecha */
+}
+
+.select-turno {
+    flex: 1;
+    min-width: 150px;
+    max-width: 200px;
+}
+
+.btn-buscar,
+.btn-limpiar {
+    height: 48px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0;
+}
+
+.btn-buscar {
+    width: 120px;
+}
+
+.btn-limpiar {
+    width: 48px;
+    height: 48px;
+    background: #e2e8f0;
+    color: #475569;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    /* Centrado absoluto del icono */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+}
+
+.btn-limpiar:hover {
+    background: #cbd5e1;
+    color: #1e293b;
+}
+
+.btn-buscar:hover {
+    background: #355a9e;
+}
+
+.btn-limpiar {
+    height: 48px;
+    width: 48px;
+    background: #e2e8f0;
+    color: #475569;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.2s;
+}
+
+.btn-limpiar:hover {
+    background: #cbd5e1;
+}
+
+/* Forzamos que todos los elementos tengan el mismo alto y se comporten igual */
+.filtro-elemento {
+    height: 45px;
+    /* Altura controlada */
+    padding: 0 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 0.95rem;
+    box-sizing: border-box;
+    /* Importante para que el padding no afecte el alto */
+    display: flex;
+    align-items: center;
+}
+
+/* ========================================== TABLA ========================================== */
+.tabla-container {
+    width: 100%;
+    background: transparent;
+    /* Mejor sin fondo gris */
+    overflow: hidden;
+}
+
+.tabla-reportes {
+    min-width: 1000px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* ========================================== HEADER TABLA ========================================== */
+/* ========================================== TABLA ========================================== */
+.tabla-container {
+    width: 100%;
+    background: rgb(241, 236, 236);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.tabla-reportes {
+    min-width: 1000px;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+/* ========================================== HEADER TABLA ========================================== */
+.tabla-header {
+    display: flex;
+    background: #4472C4;
+    color: white;
+    padding: 15px 20px;
+    font-weight: bold;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.col-personal {
+    flex: 2;
+    text-align: center;
+}
+
+.resumen-card {
+    width: 100%;
+    background: #f8fafc;
+    border-radius: 10px;
+    padding: 12px;
+    border: 1px solid #e2e8f0;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.resumen-label {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 500;
+}
+
+.icono-sindicalizado {
+    color: #2563eb;
+}
+
+.icono-apoyo {
+    color: #16a34a;
+}
+
+.icono-sindicalizado {
+    color: #2563eb;
+}
+
+.icono-apoyo {
+    color: #16a34a;
+}
+
+.resumen-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 14px;
+}
+
+.resumen-numero {
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #1e40af;
+}
+
+.resumen-numero.apoyo {
+    color: #16a34a;
+}
+
+.resumen-divider {
+    height: 1px;
+    background: #dbe2ea;
+    margin: 14px 0;
+}
+
+.resumen-total {
+    display: flex;
+    justify-content: space-between;
+    font-weight: 700;
+    font-size: 1.15rem;
+}
+
+/* ========================================== FILAS ========================================== */
+.tabla-row {
+    display: flex;
+    flex-wrap: wrap;
+    /* Permite que el contenido baje si no cabe */
+    align-items: center;
+    justify-content: space-between;
+    margin: 0 0 15px 0;
+    padding: 20px;
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    border: 1px solid #e2e8f0;
+}
+
+.tabla-row:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, .08);
+    border-color: #4472C4;
+}
+
+.tabla-row:last-child {
+    border-bottom: none;
+}
+
+/* ========================================== DATOS OPERATIVOS ========================================== */
+.fecha-row {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background: #eef4ff;
+    color: #4472C4;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: .9rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.folio-row {
+    color: #64748b;
+    font-size: .95rem;
+}
+
+.folio-row b {
+    color: #1e293b;
+}
+
+/* ========================================== BUQUE ========================================== */
+.turno-row {
+    display: inline-block;
+    background: #fff7ed;
+    color: #ea580c;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: .8rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+.buque-row {
+    font-size: 1.8rem;
+    font-weight: 800;
+    color: #0f172a;
+    letter-spacing: .5px;
+}
+
+/* ========================================== PERSONAL ========================================== */
+/* Ajuste de columnas para que se vean bien en Desktop y Móvil */
+.col-operativos {
+    flex: 1;
+    min-width: 200px;
+}
+
+.col-buque {
+    flex: 1.5;
+    min-width: 200px;
+    text-align: center;
+}
+
+.col-personal {
+    flex: 1.5;
+    min-width: 280px;
+}
+
+.col-acciones {
+    flex: 1;
+    min-width: 180px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.col-personal b {
+    color: #122C5F;
+    font-size: 1.2rem;
+}
+
+.col-personal div {
+    font-size: 1rem;
+    color: #333;
+}
+
+.personal-item {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 8px;
+}
+
+.total-row {
+    margin-top: 12px;
+    padding: 12px;
+    background: #f8fafc;
+    border-radius: 10px;
+    font-weight: 700;
+}
+
+/* ========================================== ACCIONES ========================================== */
+.col-acciones {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    min-width: 220px;
+}
+
+.buque-row {
+    font-size: 1.5rem;
+    font-weight: 700;
+}
+
+.btn-excel,
+.btn-detalle {
+    width: 180px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    border: none;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all .25s ease;
+}
+
+.btn-excel {
+    background: linear-gradient(135deg, #1fb64f, #178a3d);
+    color: white;
+    box-shadow: 0 8px 20px rgba(31, 182, 79, .25);
+}
+
+.btn-excel:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(31, 182, 79, .35);
+}
+
+.btn-detalle {
+    background: linear-gradient(135deg, #4f7df1, #2956d8);
+    color: white;
+    box-shadow: 0 8px 20px rgba(41, 86, 216, .25);
+}
+
+.btn-detalle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 25px rgba(41, 86, 216, .35);
+}
+
+.btn-excel:hover,
+.btn-detalle:hover {
+    transform: translateY(-2px);
+}
+
+.btn-detalle:active {
+    transform: translateY(0);
+}
+
+.contador-resultados {
+    display: inline-block;
+    background: #eef4ff;
+    color: #4472C4;
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    margin: 15px 0;
+}
+
+/* ========================================== SCROLL ========================================== */
+.tabla-container::-webkit-scrollbar {
+    height: 8px;
+}
+
+.tabla-container::-webkit-scrollbar-thumb {
+    background: #4472C4;
+    border-radius: 10px;
+}
+
+.tabla-container::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* ==========================================================================
+   RESPONSIVE COMPLETO PARA REPORTES
+   ========================================================================== */
+
+/* 1. TABLET Y ESCRITORIO PEQUEÑO (Hasta 1024px) */
+@media (max-width: 1024px) {
+    .tabla-header {
+        display: none;
+    }
+
+    /* Ocultar nombres de columna */
+
+    .tabla-row {
+        flex-direction: column;
+        align-items: stretch;
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+}
+
+/* 2. MÓVIL (Hasta 768px) */
+@media (max-width: 768px) {
+
+    /* A. HEADER: Título y Fecha/Hora apilados */
+    .reportes-header {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        /* Alinea el título con la fecha verticalmente */
+        width: 100%;
+        margin-bottom: 20px;
+    }
+
+    /* Aseguramos que el título no sea tan grande para que quepa todo */
+    .reportes-titulo {
+        font-size: 1.2rem;
+        /* Un poco más pequeño para dejar espacio a la fecha */
+        margin: 0;
+    }
+
+    /* Ajustamos el tamaño de la fecha/hora en móvil para que no estorbe */
+    .reportes-fecha {
+        text-align: right;
+        font-size: 0.75rem;
+        /* Fuente más pequeña en móvil */
+    }
+
+    .reportes-hora {
+        font-size: 1rem;
+        /* Hora más compacta */
+    }
+
+    /* B. FILTROS: Apilados verticalmente */
+    .reportes-filtros {
+        flex-direction: column;
+        gap: 10px;
+        padding: 15px;
+    }
+
+    .input-busqueda,
+    .input-fecha,
+    .select-turno {
+        width: 100% !important;
+        flex: none !important;
+        min-width: 100% !important;
+    }
+
+    /* Botones: Una sola línea abajo de los filtros */
+    .botones-filtros {
+        width: 100%;
+        display: flex;
+        gap: 10px;
+    }
+
+    .btn-buscar {
+        flex: 2;
+    }
+
+    .btn-limpiar {
+        width: 48px;
+        flex-shrink: 0;
+    }
+
+    /* C. TABLA: Tarjetas compactas */
+    .col-personal,
+    .col-acciones {
+        width: 100%;
+    }
+
+    .tabla-row {
+        flex-direction: column;
+        padding: 16px;
+        margin-bottom: 20px;
+    }
+
+
+
+    .col-operativos,
+    .col-buque,
+    .col-personal,
+    .col-acciones {
+        width: 100%;
+        min-width: unset;
+    }
+
+
+    .col-acciones {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .col-acciones {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+    }
+
+    .btn-excel,
+    .btn-detalle {
+        width: 130px;
+        height: 42px;
+        flex: none;
+        min-width: 0;
+        max-width: none;
+        padding: 0 10px;
+        font-size: 14px;
+    }
+
+    /* 3. Asegurar que los números aparezcan (ocultos por overflow antes) */
+    .resumen-numero {
+        font-weight: 700;
+        color: #1e40af;
+        margin-left: auto;
+        /* Empuja el número a la derecha */
+    }
+
+    /* E. AJUSTES VISUALES DE CONTENIDO */
+    .buque-row {
+        font-size: 1.4rem;
+    }
+
+    .resumen-card {
+        width: 100%;
+        box-sizing: border-box;
+        /* IMPORTANTE */
+        padding: 12px;
+    }
+
+    .tabla-reportes {
+        min-width: auto;
+        width: 100%;
+    }
+
+    .personal-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 4px 0;
+        font-size: 0.95rem;
+    }
+
+    .resumen-total {
+        margin-top: 8px;
+        padding-top: 8px;
+        border-top: 1px solid #e2e8f0;
+        font-weight: 700;
+        display: flex;
+        justify-content: space-between;
+    }
+}

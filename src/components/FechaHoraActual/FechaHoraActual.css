@@ -1,0 +1,20 @@
+.fecha-actual {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end; 
+    line-height: 1.2;
+}
+
+.fecha-texto {
+    color: #6b7280; 
+    font-weight: bold;
+    font-size: 1rem;
+    text-transform: capitalize;
+}
+
+.hora-texto {
+    color: #122C5F; /* Azul CPV */
+    font-size: 1.5rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
